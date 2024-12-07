@@ -1,9 +1,11 @@
 package com.granaflow.lancamento;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/v1/lancamentos")
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000","http://localhost:8080"})
 public class LancamentoController {
 
 	private final LancamentoRepository lancamentoRepository;
@@ -28,6 +31,11 @@ public class LancamentoController {
 	@GetMapping
 	public List<LancamentoResponse> buscarTodos() {
 		return lancamentoRepository.findAll().stream().map(Lancamento::toResponse).toList();
+	}
+	
+	@GetMapping("/tipos-custos")
+	public List<String> buscarTipos() {
+		return Arrays.asList(EnumTipoCusto.values()).stream().map(EnumTipoCusto::name).toList();
 	}
 
 }
