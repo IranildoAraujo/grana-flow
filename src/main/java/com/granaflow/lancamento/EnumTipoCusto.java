@@ -1,7 +1,17 @@
 package com.granaflow.lancamento;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public enum EnumTipoCusto {
 
-	VESTUARIO, ALIMENTACAO, COLEGIO, MOVEL, TECNOLOGIA, ENERGIA, AGUA, ALUGUEL, INTERNET, ACADEMIA, MOTORISTA_APP,
-	FARMACIA, DENTISTA, OFTALMOLOGISTA, BRINQUEDO, OUTRO, LIVRO;
+	VESTUARIO("Vestuário"), ALIMENTACAO("Alimentação"), COLEGIO("Colégio"), MOVEL("Móvel"), TECNOLOGIA("Tecnologia"),
+	ENERGIA("Energia"), AGUA("Água"), ALUGUEL("Aluguel"), INTERNET("Internet"), ACADEMIA("Academia"),
+	MOTORISTA_APP("Motorista de Aplicativo"), FARMACIA("Farmácia"), DENTISTA("Destista"),
+	OFTALMOLOGISTA("Oftalmologista"), BRINQUEDO("Brinquedo"), OUTRO("Outro"), LIVRO("Livro");
+
+	public String descricao;
+
 }

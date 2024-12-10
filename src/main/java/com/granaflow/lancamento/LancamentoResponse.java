@@ -1,7 +1,6 @@
 package com.granaflow.lancamento;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,6 +18,9 @@ public class LancamentoResponse {
 	@Enumerated(EnumType.STRING)
 	private EnumTipoCusto tipoCusto;
 	
-	private Date ultimoCustoRegistrado;
+	//TODO: Ùtimas modificações: De: Date para: String
+	//TODO: Nome: De: ultimoCustoRegistrado para dataRegistro
+	//TODO: Formato: De: "2024-12-09T21:46:28" para "09/12/2024 15:30:45"
+	private String dataRegistro;
 
 }
