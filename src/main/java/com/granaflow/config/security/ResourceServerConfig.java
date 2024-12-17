@@ -48,8 +48,8 @@ public class ResourceServerConfig {
 	    CorsConfiguration configuration = new CorsConfiguration();
 
 	    // Definir origens permitidas - substituir pelos domínios reais da sua aplicação
-	    configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://www.granaflow.local:8080"));
-
+		configuration.setAllowedOriginPatterns(List.of("http://192.168.*.*:*", "http://www.granaflow.local:*", "http://localhost:*"));
+	    
 	    // Métodos HTTP permitidos
 	    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
 
