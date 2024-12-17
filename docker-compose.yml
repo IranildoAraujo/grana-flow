@@ -11,7 +11,7 @@ services:
     environment:
       APP_NAME: grana-flow
       CONTEXT_PATH: /grana-flow/api
-      CORS_ORIGIN: http://192.168.*.*:*, http://www.granaflow.local:*, http://localhost:*
+      CORS_ORIGIN: "http://192.168.*.*:*,http://www.granaflow.local:*,http://localhost:*"
       DS_DRIVER: oracle.jdbc.OracleDriver
       DS_URL: jdbc:oracle:thin:@oracle-db:1521/XEPDB1  # Referência ao serviço oracle-db
       DS_USERNAME: SYSTEM  # Username do Oracle
