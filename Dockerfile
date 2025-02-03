@@ -1,33 +1,48 @@
-# Etapa 1: Construção da aplicação (Builder)
-FROM openjdk:17-jdk-slim AS builder
-
-# Instalar o Maven
-RUN apt-get update && apt-get install -y maven
-
-# Definir o diretório de trabalho
+FROM maven:3.9.5-eclipse-temurin-17 AS builder
 WORKDIR /app
 
-# Copiar o arquivo pom.xml e baixar as dependências do Maven
 COPY pom.xml .
+
+COPY ./src ./src
+
 RUN mvn dependency:go-offline
 
-# Copiar o restante do código da aplicação
-COPY src /app/src
+RUN mvn clean install -DskipTests
 
-# Construir a aplicação Spring Boot
-RUN mvn clean package -DskipTests
-
-# Etapa 2: Execução (Runtime)
-FROM openjdk:17-jdk-slim
-
-# Definir o diretório de trabalho
+FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
+COPY --from=builder /app/target/*.jar /app/grana-flow.jar
 
-# Copiar o arquivo jar gerado para o container
-COPY --from=builder /app/target/grana-flow-0.0.1-SNAPSHOT.jar /app/grana-flow.jar
+ARG APP_NAME
+ARG CONTEXT_PATH
+ARG CORS_ORIGIN
+ARG DS_DRIVER_CLASS_NAME
+ARG DS_URL
+ARG DS_USERNAME
+ARG DS_PASSWORD
+ARG DS_SCHEMA
+ARG DS_DIALECT
+ARG PROFILES_ACTIVE
+ARG SECRET_KEY
+ARG TZ
+ARG ORACLE_PASSWORD
+ARG ORACLE_SID
 
-# Expôr a porta da aplicação
+ENV APP_NAME=${APP_NAME} \
+    CONTEXT_PATH=${CONTEXT_PATH} \
+    CORS_ORIGIN=${CORS_ORIGIN} \
+    DS_DRIVER_CLASS_NAME=${DS_DRIVER_CLASS_NAME} \
+    DS_URL=${DS_URL} \
+    DS_USERNAME=${DS_USERNAME} \
+    DS_PASSWORD=${DS_PASSWORD} \
+    DS_SCHEMA=${DS_SCHEMA} \
+    DS_DIALECT=${DS_DIALECT} \
+    PROFILES_ACTIVE=${PROFILES_ACTIVE} \
+    SECRET_KEY=${SECRET_KEY} \
+    TZ=${TZ} \
+    ORACLE_PASSWORD=${ORACLE_PASSWORD} \
+    ORACLE_SID=${ORACLE_SID}
+
 EXPOSE 8080
 
-# Comando para rodar a aplicação
 ENTRYPOINT ["java", "-jar", "/app/grana-flow.jar"]
